@@ -110,14 +110,14 @@ config = function()
   })
 
   -- autoformat on save
-  if vim.fn.executable("neoformat") == 1 then
-    vim.api.nvim_exec([[
-    augroup fmt
-    autocmd!
-    autocmd BufWritePre *.html,*.css,*.js,*.ts,*.tsx,*.jsx,*.astro,*.templ Neoformat
-    augroup END
-    ]], true)
-  end
+  -- if vim.fn.executable("neoformat") == 1 then
+  --   vim.api.nvim_exec([[
+  --   augroup fmt
+  --   autocmd!
+  --   autocmd BufWritePre *.html,*.css,*.js,*.ts,*.tsx,*.jsx,*.astro,*.templ Neoformat
+  --   augroup END
+  --   ]], true)
+  -- end
 
   -- Fix Undefined global 'vim'
   lsp.nvim_workspace()

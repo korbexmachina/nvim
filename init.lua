@@ -53,12 +53,6 @@ set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
 vim.opt.conceallevel = 2
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function()
-		vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
-	end,
-})
 
 -- Telescope
 local builtin = require('telescope.builtin')
