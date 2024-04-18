@@ -1,4 +1,4 @@
 return {
-	-- Tabstop and Shiftwidth
-	'tpope/vim-sleuth',
+  -- Tabstop and Shiftwidth
+  'tpope/vim-sleuth',
 }

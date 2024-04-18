@@ -1,8 +1,10 @@
 return {
-  		'akinsho/toggleterm.nvim',
-		version = "*",
-		config = true,
-		setup = function() require('toggleterm').setup {} end,
+  'akinsho/toggleterm.nvim',
+  version = '*',
+  config = true,
+  setup = function()
+    require('toggleterm').setup {}
+  end,
 
-		vim.keymap.set('n', '<leader>tf', ':ToggleTerm direction=float<CR>')
+  vim.keymap.set('n', '<leader>tf', ':ToggleTerm direction=float<CR>'),
 }
