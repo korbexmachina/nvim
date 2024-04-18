@@ -1,20 +1,27 @@
 return {
   'stevearc/conform.nvim',
-  setup = function()
-    require("conform").setup({
+  event = { 'BufReadPre', 'BufNewFile' },
+  config = function()
+    local conform = require 'conform'
+
+    conform.setup {
       formatters_by_ft = {
-        lua = { "stylua" },
-        -- Conform will run multiple formatters sequentially
-        python = { "isort", "black" },
-        -- Use a sub-list to run only the first available formatter
-        javascript = { { "prettierd", "prettier" } },
+        javascript = { 'prettier' },
+        css = { 'prettier' },
+        html = { 'prettier' },
+        json = { 'prettier' },
+        yaml = { 'prettier' },
+        markdown = { 'mdslw', 'doctoc', 'cbfmt' },
+        lua = { 'stylua' },
+        python = { 'isort', 'black' },
+        c = { 'clang-format' },
+        cpp = { 'clang-format' },
       },
-      log_level = vim.log.levels.DEBUG,
       format_on_save = {
-        -- These options will be passed to conform.format()
-        timeout_ms = 500,
         lsp_fallback = true,
+        async = true,
+        -- timeout_ms = 500,
       },
-    })
+    }
   end,
 }

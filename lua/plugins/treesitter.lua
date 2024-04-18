@@ -1,26 +1,26 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  lazy = true,
-  build = ":TSUpdate",
+  'nvim-treesitter/nvim-treesitter',
+  -- lazy = true,
+  build = ':TSUpdate',
   config = function()
-    local configs = require("nvim-treesitter.configs")
+    local configs = require 'nvim-treesitter.configs'
 
-    configs.setup({
+    configs.setup {
       ensure_installed = {
-        "c",
-        "lua",
-        "vim",
-        "vimdoc",
-        "query",
-        "elixir",
-        "gleam",
-        "heex",
-        "rust",
-        "go",
-        "templ",
-        "html",
-        "markdown",
-        "markdown_inline"
+        'c',
+        'lua',
+        'vim',
+        'vimdoc',
+        'query',
+        'elixir',
+        'gleam',
+        'heex',
+        'rust',
+        'go',
+        'templ',
+        'html',
+        'markdown',
+        'markdown_inline',
       },
       auto_install = true,
       sync_install = false,
@@ -31,7 +31,7 @@ return {
         extended_mode = true,
         max_file_lines = nil,
       },
-      disable = { "latex", "tex" },
-    })
+      disable = { 'latex', 'tex' },
+    }
   end,
 }
