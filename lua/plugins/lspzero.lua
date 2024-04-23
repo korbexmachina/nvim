@@ -4,6 +4,21 @@ return {
   dependencies = {
     {
       'hrsh7th/nvim-cmp',
+      dependencies = {
+        {
+          'Saecki/crates.nvim',
+          event = { 'BufRead Cargo.toml' },
+          opts = {
+            src = {
+              cmp = { enabled = true },
+            },
+          },
+        },
+      },
+      opts = function(_, opts)
+        opts.sources = opts.sources or {}
+        table.insert(opts.sources, { name = 'crates' })
+      end,
 
       -- LSP completion source:
       'hrsh7th/cmp-nvim-lsp',
@@ -25,8 +40,6 @@ return {
         require 'lspconfig'
       end,
     },
-    -- Rust support
-    { 'simrat39/rust-tools.nvim' },
     {
       'williamboman/mason.nvim',
       config = function()
@@ -75,52 +88,39 @@ return {
       'pylsp',
     }
 
-    -- local lspconfig = require 'lspconfig'
+    local lspconfig = require 'lspconfig'
 
     -- Use a loop to conveniently call 'setup' on multiple servers and
     -- map buffer local keybindings when the language server attaches
 
-    -- local servers = { 'gopls', 'ccls', 'cmake', 'tsserver', 'templ', 'gleam' }
-    -- for _, l in ipairs(servers) do
-    --   lspconfig[l].setup {
-    --     on_attach = on_attach,
-    --     capabilities = capabilities,
-    --   }
-    -- end
-    --
-    -- vim.filetype.add { extension = { templ = 'templ' } }
-    --
-    -- lspconfig.html.setup {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    --   filetypes = { 'html', 'templ' },
-    -- }
-    --
-    -- lspconfig.htmx.setup {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    --   filetypes = { 'html', 'templ' },
-    -- }
-    --
-    -- lspconfig.tailwindcss.setup {
-    --   on_attach = on_attach,
-    --   capabilities = capabilities,
-    --   filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
-    --   init_options = { userLanguages = { templ = 'html' } },
-    -- }
-    --
-    -- autoformat on save
-    -- if vim.fn.executable("neoformat") == 1 then
-    --   vim.api.nvim_exec([[
-    --   augroup fmt
-    --   autocmd!
-    --   autocmd BufWritePre *.html,*.css,*.js,*.ts,*.tsx,*.jsx,*.astro,*.templ Neoformat
-    --   augroup END
-    --   ]], true)
-    -- end
+    local servers = { 'gopls', 'ccls', 'cmake', 'tsserver', 'templ', 'gleam' }
+    for _, l in ipairs(servers) do
+      lspconfig[l].setup {
+        on_attach = on_attach,
+        capabilities = capabilities,
+      }
+    end
 
-    -- Fix Undefined global 'vim'
-    lsp.nvim_workspace()
+    vim.filetype.add { extension = { templ = 'templ' } }
+
+    lspconfig.html.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { 'html', 'templ' },
+    }
+
+    lspconfig.htmx.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { 'html', 'templ' },
+    }
+
+    lspconfig.tailwindcss.setup {
+      on_attach = on_attach,
+      capabilities = capabilities,
+      filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+      init_options = { userLanguages = { templ = 'html' } },
+    }
 
     -- Completion Plugin Setup
     local has_words_before = function()
