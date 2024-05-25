@@ -6,5 +6,5 @@ return {
     require('oil').setup() {}
   end,
 
-  vim.keymap.set('n', '<C-o>', vim.cmd.Oil, { desc = 'Oil' }),
+  vim.keymap.set('n', '<leader>o', vim.cmd.Oil, { desc = 'Oil' }),
 }

@@ -85,7 +85,7 @@ return {
       'gopls',
       'rust_analyzer',
       'lua_ls',
-      'pylsp',
+      'ruff',
     }
 
     local lspconfig = require 'lspconfig'
