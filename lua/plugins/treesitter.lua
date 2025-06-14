@@ -21,6 +21,8 @@ return {
         'html',
         'markdown',
         'markdown_inline',
+        'ledger',
+        'typst',
       },
       auto_install = true,
       sync_install = false,

@@ -44,7 +44,7 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
--- Treesitter folding
+-- Tree-sitter folding
 -- vim.wo.foldmethod = 'expr'
 -- vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.cmd [[
@@ -93,3 +93,12 @@ local TelescopeColor = {
 for hl, col in pairs(TelescopeColor) do
   vim.api.nvim_set_hl(0, hl, col)
 end
+
+-- Typst compile on write
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+  pattern = '*.typ',
+  callback = function()
+    -- Compile based on the current absolute filepath
+    vim.fn.jobstart('typst compile ' .. vim.fn.expand '%:p')
+  end,
+})

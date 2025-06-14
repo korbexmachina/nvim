@@ -15,6 +15,7 @@ return {
           },
         },
       },
+      sources = { { name = 'nvim_lsp' }, { name = 'luasnip' } },
       opts = function(_, opts)
         opts.sources = opts.sources or {}
         table.insert(opts.sources, { name = 'crates' })
@@ -85,15 +86,81 @@ return {
       'gopls',
       'rust_analyzer',
       'lua_ls',
-      'ruff',
     }
 
     local lspconfig = require 'lspconfig'
 
+    -- Harper for spelling and grammar
+    -- lspconfig.harper_ls.setup {
+    --   filetype = { 'typst' },
+    --   settings = {
+    --     ['harper-ls'] = {
+    --       userDictPath = '~/.config/harper/dict.txt',
+    --       fileDictPath = '~/.config/harper/.harper',
+    --     },
+    --   },
+    -- }
+
+    lspconfig.lua_ls.setup {
+      capabilities = capabilities,
+      filetype = { 'lua' },
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+        },
+      },
+    }
+
+    lspconfig.nixd.setup {
+      cmd = { 'nixd' },
+      capabilities = capabilities,
+      filetype = { 'nix' },
+      settings = {
+        nixd = {
+          nixpkgs = {
+            expr = 'import <nixpkgs> { }',
+          },
+          -- options = {
+          -- darwin = {
+          -- expr = 'let flake = builtins.getFlake(toString ./.); in flake.darwinConfigurations.Korbens-MacBook-Pro.options',
+          -- },
+          -- },
+        },
+      },
+    }
+
+    lspconfig.ruff.setup {
+      cmd = { 'ruff-lsp' },
+      capabilities = capabilities,
+      filetype = { 'python' },
+    }
+
+    -- lspconfig.python_lsp_server.setup {
+    -- cmd = { 'python-lsp-server' },
+    -- capabilities = capabilities,
+    -- filetype = { 'python' },
+    -- }
+
+    lspconfig.hls.setup {
+      capabilities = capabilities,
+      filetype = { 'haskell', 'lhaskell', 'cabal' },
+      cmd = { '/run/current-system/sw/bin/haskell-language-server-wrapper', '--lsp' },
+    }
+
+    lspconfig.biome.setup {
+      capabilities = capabilities,
+      filetype = { 'javascript', 'html', 'css' },
+    }
+
     -- Use a loop to conveniently call 'setup' on multiple servers and
     -- map buffer local keybindings when the language server attaches
 
-    local servers = { 'gopls', 'ccls', 'cmake', 'tsserver', 'templ', 'gleam' }
+    local servers = { 'gopls', 'ccls', 'cmake', 'ts_ls', 'templ', 'gleam' }
     for _, l in ipairs(servers) do
       lspconfig[l].setup {
         on_attach = on_attach,
@@ -109,18 +176,18 @@ return {
       filetypes = { 'html', 'templ' },
     }
 
-    lspconfig.htmx.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = { 'html', 'templ' },
-    }
+    -- lspconfig.htmx.setup {
+    -- on_attach = on_attach,
+    -- capabilities = capabilities,
+    -- filetypes = { 'html', 'templ' },
+    -- }
 
-    lspconfig.tailwindcss.setup {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
-      init_options = { userLanguages = { templ = 'html' } },
-    }
+    -- lspconfig.tailwindcss.setup {
+    --   on_attach = on_attach,
+    --   capabilities = capabilities,
+    --   filetypes = { 'templ', 'astro', 'javascript', 'typescript', 'react' },
+    --   init_options = { userLanguages = { templ = 'html' } },
+    -- }
 
     -- Completion Plugin Setup
     local has_words_before = function()
